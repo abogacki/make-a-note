@@ -1,11 +1,27 @@
 import { Schema } from "mongoose";
+import { INoteModel } from "src/notes/types";
 import db from "src/database";
 
-const NotesSchema = new Schema({
-  title: String,
-  description: String,
+const NoteSchema = new Schema<INoteModel>({
+  title: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  expireAt: {
+    type: Date,
+    default: undefined,
+    index: { expires: "5m" },
+  },
 });
 
-const Notes = db.model("Notes", NotesSchema);
+const Note = db.model("Notes", NoteSchema);
 
-export default Notes;
+export default Note;

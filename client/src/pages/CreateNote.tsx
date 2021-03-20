@@ -1,4 +1,9 @@
-import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
+import React, {
+  ChangeEventHandler,
+  FormEventHandler,
+  useEffect,
+  useState,
+} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
@@ -6,8 +11,7 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
-import { QueryClient, useQuery, useQueryClient } from "react-query";
-import { fetchApi, getApiRoute } from "api/apiRoutes";
+import { fetchApi } from "api/apiRoutes";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -46,13 +50,17 @@ export default function CreateNote() {
     e.preventDefault();
   };
 
-  const { isLoading, error } = useQuery<unknown, Error>("repoData", () =>
-    fetch(getApiRoute("/note/asdadasdas"))
-  );
+  useEffect(() => {
+    const fetchNote = async () => {
+      try {
+        await fetchApi("/notes/1234321-noteid");
+      } catch (error) {
+        throw error;
+      }
+    };
 
-  if (isLoading) return <>"Loading..."</>;
-
-  if (error) return <>{`An error has occurred: ${error.message}`}</>;
+    fetchNote();
+  }, []);
 
   return (
     <Paper className={classes.paper}>
