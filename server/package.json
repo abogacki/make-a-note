@@ -5,13 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon",
+    "start": "nodemon",
     "build": "rm -rf ./build && npx tsc"
   },
   "author": "@abogacki",
   "license": "MIT",
   "dependencies": {
-    "express": "^4.17.1"
+    "connect-mongo": "^4.4.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.1"
   },
   "devDependencies": {
     "@types/express": "^4.17.11",
