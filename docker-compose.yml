@@ -1,0 +1,49 @@
+version: '3.7'
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    volumes:
+      - ./server:/server
+      - ./server/node_modules
+    ports:
+      - 3001:3001
+    depends_on:
+      - mongo
+    links:
+      - mongo
+    networks:
+      - make-a-note
+    env_file: .env
+    environment: 
+      - MONGO_USERNAME=$MONGO_USERNAME
+      - MONGO_PASSWORD=$MONGO_PASSWORD
+      - MONGO_HOSTNAME=$MONGOO_HOSTNAME
+      - MONGO_PORT=$MONGO_PORT
+  client:
+    build:
+      context: ./client/
+      dockerfile: Dockerfile
+    volumes:
+      - ./client:/client
+      - /client/node_modules
+    ports:
+      # exposed:container
+      - 3000:3000
+    links: 
+      - server
+    networks:
+      - make-a-note
+  mongo:
+    image: mongo
+    volumes:
+      - /db
+    ports:
+      - 27017:27017
+    networks:
+      - make-a-note
+networks:
+  make-a-note:
+    driver: bridge
