@@ -23,5 +23,5 @@ app.use("/notes", notes);
 app.use(errorMiddleware);
 
 app.listen(PORT, function () {
-  console.log("Example app listening on port " + PORT);
+  console.log("App listening on port " + PORT);
 });
