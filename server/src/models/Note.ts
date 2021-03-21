@@ -63,10 +63,7 @@ noteSchema.methods.generateAuthToken = async function () {
   const token = jwt.sign({ _id: note._id }, process.env.JWT_SECRET as string);
   note.tokens.push({ token, _id: note.id });
 
-  console.log({ token, note });
-
   await note.save();
-  console.log({ note });
   return token;
 };
 
@@ -76,12 +73,20 @@ noteSchema.statics.findByCredentials = async (
 ) => {
   const note = await Note.findById(noteId);
   if (!note) {
-    throw new HttpException(404, "Note not fount");
+    throw new HttpException({
+      status: "error",
+      statusCode: 404,
+      message: "Note not found",
+    });
   }
 
   const isPasswordMatch = await bcrypt.compare(password, note.password);
   if (!isPasswordMatch) {
-    throw new HttpException(401, "Invalid login credentials");
+    throw new HttpException({
+      status: "error",
+      statusCode: 401,
+      message: "Invalid login credentials",
+    });
   }
 
   return note;
