@@ -7,21 +7,20 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./server:/server
-      - ./server/node_modules
+      - /server/node_modules
     ports:
-      - 3001:3001
+      - 3001:$SERVER_PORT
     depends_on:
       - mongo
     links:
       - mongo
-    networks:
-      - make-a-note
     env_file: .env
     environment: 
-      - MONGO_USERNAME=$MONGO_USERNAME
-      - MONGO_PASSWORD=$MONGO_PASSWORD
-      - MONGO_HOSTNAME=$MONGOO_HOSTNAME
+      - MONGO_HOSTNAME=$MONGO_HOSTNAME
       - MONGO_PORT=$MONGO_PORT
+      - SERVER_PORT=$SERVER_PORT
+      - JWT_SECRET=$JWT_SECRET
+
   client:
     build:
       context: ./client/
@@ -34,16 +33,13 @@ services:
       - 3000:3000
     links: 
       - server
-    networks:
-      - make-a-note
+    environment: 
+      - CHOKIDAR_USEPOLLING=true
+
   mongo:
     image: mongo
     volumes:
-      - /db
+      - ./db:/db
     ports:
-      - 27017:27017
-    networks:
-      - make-a-note
-networks:
-  make-a-note:
-    driver: bridge
+      - 27017:$MONGO_PORT
+    env_file: .env

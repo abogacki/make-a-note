@@ -1,12 +1,27 @@
 import express from "express";
-import Notes from "./notes/schema";
+import cors from "cors";
+import helmet from "helmet";
+import dotenv from "dotenv";
+
+import errorMiddleware from "src/middlewares/errorMiddleware";
+import notes from "src/routes/notes";
+
+dotenv.config();
+
+const PORT = process.env.SERVER_PORT || 3001;
 
 const app = express();
 
-app.get("/", function (_req, res) {
-  res.send("Hello World!");
-});
+app.use(helmet());
 
-app.listen(3001, function () {
-  console.log("Example app listening on port 3001!");
+app.use(express.json());
+
+app.use(cors());
+
+app.use("/notes", notes);
+
+app.use(errorMiddleware);
+
+app.listen(PORT, function () {
+  console.log("App listening on port " + PORT);
 });
