@@ -1,16 +1,11 @@
-import CreateNote from "pages/CreateNote";
+import "fontsource-roboto";
 import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { RouteNames } from "routes";
-import "fontsource-roboto";
-import {
-  AppBar,
-  CssBaseline,
-  makeStyles,
-  Toolbar,
-  Typography,
-} from "@material-ui/core";
-import { QueryClient, QueryClientProvider } from "react-query";
+import { CssBaseline, makeStyles } from "@material-ui/core";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import DateFnsUtils from "@date-io/date-fns";
+
+import CreateNote from "pages/CreateNote";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -28,24 +23,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const queryClient = new QueryClient();
-
 export default function App() {
   const classes = useStyles();
   return (
-    <QueryClientProvider client={queryClient}>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <CssBaseline />
-      <AppBar position="absolute" color="default" className={classes.appBar}>
+      {/* <AppBar position="absolute" color="default" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
             Company name
           </Typography>
         </Toolbar>
-      </AppBar>
+      </AppBar> */}
       <main className={classes.layout}>
         <Router>
           <Switch>
-            <Route path={["/", RouteNames.createNote]}>
+            <Route path={["/", "/notes"]}>
               <CreateNote />
             </Route>
             <Route>
@@ -54,6 +47,6 @@ export default function App() {
           </Switch>
         </Router>
       </main>
-    </QueryClientProvider>
+    </MuiPickersUtilsProvider>
   );
 }

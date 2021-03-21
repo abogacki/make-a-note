@@ -25,6 +25,12 @@ export const noteGenerateToken = async (req: Request, res: Response) => {
 export const noteCreate = async (req: Request, res: Response) => {
   const { title, description, password } = req.body;
 
+  console.log({ req });
+  console.log({ title, description, password });
+  console.log({ title, description, password });
+  console.log({ title, description, password });
+  console.log({ title, description, password });
+
   const newNote = new Note({
     title,
     description,

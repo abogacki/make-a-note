@@ -5,7 +5,7 @@ import { Model, Schema, Document } from "mongoose";
 import db from "src/database/database";
 import HttpException from "src/exceptions/HttpException";
 
-type JWTToken = {
+type TJwtToken = {
   _id: string;
   token: string;
 };
@@ -16,7 +16,7 @@ export interface INote {
   password: string;
   createdAt: Date;
   expirationDate?: Date;
-  tokens: Array<JWTToken>;
+  tokens: Array<TJwtToken>;
 }
 
 export interface INoteDocument extends INote, Document {
