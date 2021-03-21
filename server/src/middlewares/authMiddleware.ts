@@ -3,18 +3,9 @@ import jwt from "jsonwebtoken";
 import HttpException from "src/exceptions/HttpException";
 import Note, { INoteDocument } from "src/models/Note";
 
-declare global {
-  namespace Express {
-    interface Request {
-      token: string | null;
-      note: INoteDocument | null;
-    }
-  }
-}
-
 const authMiddleware = async (
   req: Request,
-  res: Response,
+  _res: Response,
   next: NextFunction
 ) => {
   try {
@@ -39,8 +30,6 @@ const authMiddleware = async (
       });
     }
 
-    req.note = note;
-    req.token = token;
     next();
   } catch (error) {
     next(error);

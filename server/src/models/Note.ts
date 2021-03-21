@@ -1,5 +1,5 @@
 import { Model, Schema, Document } from "mongoose";
-import db from "src/database";
+import db from "src/database/database";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import HttpException from "src/exceptions/HttpException";
@@ -101,6 +101,6 @@ noteSchema.pre("save", async function (next) {
   next();
 });
 
-const Note = db.model<INoteDocument, INoteModel>("Notes", noteSchema);
+const Note = db.model<INoteDocument, INoteModel>("Note", noteSchema);
 
 export default Note;

@@ -5,17 +5,17 @@ import {
   noteRead,
   noteUpdate,
 } from "src/controllers/notesController";
-import { handleError } from "src/exceptions/HttpException";
+import { handleErrors } from "src/exceptions/HttpException";
 import authMiddleware from "src/middlewares/authMiddleware";
 
 const notesRouter = express.Router();
 
-notesRouter.get("/:noteId", authMiddleware, handleError(noteRead));
+notesRouter.get("/:noteId", authMiddleware, handleErrors(noteRead));
 
-notesRouter.post("/:noteId/token", handleError(noteGenerateToken));
+notesRouter.post("/:noteId/token", handleErrors(noteGenerateToken));
 
-notesRouter.post("/", handleError(noteCreate));
+notesRouter.post("/", handleErrors(noteCreate));
 
-notesRouter.put("/:noteId", authMiddleware, handleError(noteUpdate));
+notesRouter.put("/:noteId", authMiddleware, handleErrors(noteUpdate));
 
 export default notesRouter;

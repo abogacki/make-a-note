@@ -19,7 +19,7 @@ class HttpException extends Error implements IError {
   }
 }
 
-export const handleError = (handler: RequestHandler) => async (
+export const handleErrors = (handler: RequestHandler) => async (
   req: Request,
   res: Response,
   next: NextFunction
