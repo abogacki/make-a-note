@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+
 import HttpException from "src/exceptions/HttpException";
 import Note from "src/models/Note";
 

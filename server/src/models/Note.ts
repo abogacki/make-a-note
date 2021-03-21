@@ -1,7 +1,8 @@
-import { Model, Schema, Document } from "mongoose";
-import db from "src/database/database";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Model, Schema, Document } from "mongoose";
+
+import db from "src/database/database";
 import HttpException from "src/exceptions/HttpException";
 
 type JWTToken = {

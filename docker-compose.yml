@@ -9,7 +9,7 @@ services:
       - ./server:/server
       - /server/node_modules
     ports:
-      - 3001:3001
+      - 3001:$SERVER_PORT
     depends_on:
       - mongo
     links:
@@ -41,5 +41,5 @@ services:
     volumes:
       - ./db:/db
     ports:
-      - 27017:27017
+      - 27017:$MONGO_PORT
     env_file: .env

@@ -3,7 +3,6 @@ import cors from "cors";
 import helmet from "helmet";
 import dotenv from "dotenv";
 
-import "src/types/";
 import errorMiddleware from "src/middlewares/errorMiddleware";
 import notes from "src/routes/notes";
 
