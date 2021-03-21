@@ -1,17 +1,17 @@
 import { Request, Response, NextFunction, RequestHandler } from "express";
 
-interface IError {
+interface IApiError {
   statusCode: number;
   status: string;
   message: string;
 }
 
-class HttpException extends Error implements IError {
+class HttpException extends Error implements IApiError {
   status: string;
   message: string;
   statusCode: number;
 
-  constructor({ statusCode, status, message }: IError) {
+  constructor({ statusCode, status, message }: IApiError) {
     super(message);
     this.statusCode = statusCode;
     this.status = status;
