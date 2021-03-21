@@ -1,10 +1,12 @@
 import express from "express";
-import bodyParser from "body-parser";
 import cors from "cors";
 import helmet from "helmet";
 import morgan from "morgan";
-import errorMiddleware from "src/middleware/errorMiddleware";
-import notes from "./notes";
+import errorMiddleware from "src/middlewares/errorMiddleware";
+import notes from "src/routes/notes";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const PORT = process.env.SERVER_PORT || 3001;
 

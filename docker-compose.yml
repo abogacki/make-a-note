@@ -19,6 +19,7 @@ services:
       - MONGO_HOSTNAME=$MONGO_HOSTNAME
       - MONGO_PORT=$MONGO_PORT
       - SERVER_PORT=$SERVER_PORT
+      - JWT_SECRET=$JWT_SECRET
 
   client:
     build:
