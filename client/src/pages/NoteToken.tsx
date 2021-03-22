@@ -8,7 +8,7 @@ import { fetchApi } from "api";
 import PasswordInput from "components/PasswordInput";
 import useForm from "hooks/useForm";
 import React from "react";
-import { useParams } from "react-router";
+import { useHistory, useParams } from "react-router";
 import Cookies from "js-cookie";
 
 const useStyles = makeStyles((theme) => ({
@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NoteToken = () => {
+  const history = useHistory();
   const classes = useStyles();
   const { state, handleChange, handleSubmit } = useForm({
     password: "",
@@ -38,6 +39,7 @@ const NoteToken = () => {
     });
 
     Cookies.set("Authorization", data.token);
+    history.push(`/notes/${noteId}`);
   };
 
   return (

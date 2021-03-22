@@ -27,9 +27,7 @@ const useFetchApi = <T>(path: string, init?: RequestInit) => {
       try {
         setIsLoading(true);
         const response = await fetchApi(path, init);
-        if (!response.ok) throw response;
-
-        setData(response.json());
+        setData(response);
       } catch (error) {
         handleError(error);
       } finally {
@@ -38,7 +36,7 @@ const useFetchApi = <T>(path: string, init?: RequestInit) => {
     };
 
     fetchData();
-  }, [handleError, init, path]);
+  }, []);
 
   return {
     data,

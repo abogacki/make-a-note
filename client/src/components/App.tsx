@@ -9,6 +9,8 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 
 import CreateNote from "pages/CreateNote";
+import ReadNote from "pages/ReadNote";
+import NoteToken from "pages/NoteToken";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -42,8 +44,14 @@ const App = () => {
       <main className={classes.layout}>
         <Router>
           <Switch>
-            <Route path={["/", "/notes"]}>
+            <Route exact path={["/", "/notes"]}>
               <CreateNote />
+            </Route>
+            <Route exact path="/notes/:noteId">
+              <ReadNote />
+            </Route>
+            <Route exact path="/notes/:noteId/token">
+              <NoteToken />
             </Route>
             <Route>
               <div>Not found</div>
