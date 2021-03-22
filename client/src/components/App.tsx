@@ -4,18 +4,13 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { CssBaseline, makeStyles } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
 
 import CreateNote from "pages/CreateNote";
 import ReadNote from "pages/ReadNote";
 import NoteToken from "pages/NoteToken";
+import AppHeader from "components/AppHeader";
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: "relative",
-  },
   layout: {
     width: "auto",
     marginLeft: theme.spacing(2),
@@ -34,13 +29,7 @@ const App = () => {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <CssBaseline />
-      <AppBar position="absolute" color="default" className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h6" color="inherit" noWrap>
-            Company name
-          </Typography>
-        </Toolbar>
-      </AppBar>
+      <AppHeader />
       <main className={classes.layout}>
         <Router>
           <Switch>
