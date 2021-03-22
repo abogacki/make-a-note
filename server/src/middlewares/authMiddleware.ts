@@ -18,7 +18,20 @@ const authMiddleware = async (
         message: "Not authorized to access this resource",
       });
 
-    const data = jwt.verify(token, process.env.JWT_SECRET as string);
+    let data;
+    try {
+      data = jwt.verify(token, process.env.JWT_SECRET as string);
+      if (!data) {
+        throw new Error();
+      }
+    } catch (error) {
+      throw new HttpException({
+        statusCode: 401,
+        status: "error",
+        message: "Invalid token",
+      });
+    }
+
     const note = await Note.findOne({
       _id: (data as INoteDocument)._id,
       "tokens.token": token,

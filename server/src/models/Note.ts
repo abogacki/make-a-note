@@ -38,7 +38,7 @@ const noteSchema = new Schema<INoteDocument>({
   },
   expirationDate: {
     type: Date,
-    expires: 0,
+    expires: 1,
     default: null,
   },
   password: {

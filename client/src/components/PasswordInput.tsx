@@ -1,8 +1,8 @@
 import FormControl from "@material-ui/core/FormControl";
 import IconButton from "@material-ui/core/IconButton";
-import Input from "@material-ui/core/Input";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import InputLabel from "@material-ui/core/InputLabel";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/Visibility";
 
@@ -28,7 +28,7 @@ const PasswordInput: FunctionComponent<TProps> = ({
   return (
     <FormControl variant="outlined">
       <InputLabel htmlFor={id}>{label}</InputLabel>
-      <Input
+      <OutlinedInput
         id={id}
         type={showPassword ? "text" : "password"}
         value={value}
@@ -44,6 +44,7 @@ const PasswordInput: FunctionComponent<TProps> = ({
             </IconButton>
           </InputAdornment>
         }
+        labelWidth={label.length * 10}
       />
     </FormControl>
   );

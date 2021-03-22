@@ -4,6 +4,9 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { CssBaseline, makeStyles } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 
 import CreateNote from "pages/CreateNote";
 
@@ -23,18 +26,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function App() {
+const App = () => {
   const classes = useStyles();
+
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <CssBaseline />
-      {/* <AppBar position="absolute" color="default" className={classes.appBar}>
+      <AppBar position="absolute" color="default" className={classes.appBar}>
         <Toolbar>
           <Typography variant="h6" color="inherit" noWrap>
             Company name
           </Typography>
         </Toolbar>
-      </AppBar> */}
+      </AppBar>
       <main className={classes.layout}>
         <Router>
           <Switch>
@@ -49,4 +53,6 @@ export default function App() {
       </main>
     </MuiPickersUtilsProvider>
   );
-}
+};
+
+export default App;

@@ -1,15 +1,13 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { fetchApi } from "api/apiRoutes";
+import { fetchApi } from "api";
 import NoteForm from "components/NoteForm";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: "relative",
-  },
   paper: {
     marginTop: theme.spacing(3),
     marginBottom: theme.spacing(3),
@@ -22,20 +20,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CreateNote() {
+const CreateNote = () => {
+  const history = useHistory();
   const classes = useStyles();
-
-  useEffect(() => {
-    const fetchNote = async () => {
-      try {
-        await fetchApi("/notes/1234321-noteid");
-      } catch (error) {
-        throw error;
-      }
-    };
-
-    fetchNote();
-  }, []);
 
   const initialValues = {
     title: "",
@@ -44,16 +31,21 @@ export default function CreateNote() {
     password: "",
   };
 
-  const onSubmit = (values: unknown) => {
-    const response = fetchApi("/notes/", {
-      method: "POST",
-      body: JSON.stringify(values),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    console.log({ response });
+  const onSubmit = async (values: unknown) => {
+    try {
+      const note = await fetchApi("/notes/", {
+        method: "POST",
+        body: JSON.stringify(values),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+
+      history.push(`/notes/${note._id}`);
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (
@@ -66,4 +58,6 @@ export default function CreateNote() {
       </Box>
     </Paper>
   );
-}
+};
+
+export default CreateNote;

@@ -4,6 +4,7 @@ const useForm = <TFormShape extends { [k: string]: unknown }>(
   initialValues: TFormShape
 ) => {
   const [formState, setFormState] = useState(initialValues);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const setFieldValue = (name: keyof TFormShape, value: unknown) => {
     setFormState((state) => ({ ...state, [name]: value }));
@@ -17,11 +18,17 @@ const useForm = <TFormShape extends { [k: string]: unknown }>(
 
   const handleSubmit: (
     submitHandler: (formValues: TFormShape) => unknown
-  ) => FormEventHandler<HTMLFormElement> = (submitHandler) => (e) => {
+  ) => FormEventHandler<HTMLFormElement> = (submitHandler) => async (e) => {
     e.preventDefault();
-    console.log({ e }, "handlesSubmit");
-
-    submitHandler(formState);
+    if (isSubmitting) return;
+    try {
+      setIsSubmitting(true);
+      await submitHandler(formState);
+    } catch (error) {
+      throw error;
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return {

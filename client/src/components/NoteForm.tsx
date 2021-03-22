@@ -31,7 +31,6 @@ const NoteForm: FunctionComponent<TProps> = ({ onSubmit, initialValues }) => {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
-            required
             id="title"
             name="title"
             label="Title"
@@ -64,7 +63,6 @@ const NoteForm: FunctionComponent<TProps> = ({ onSubmit, initialValues }) => {
         <Grid item xs={12}>
           <TextField
             fullWidth
-            required
             label="Note"
             name="description"
             multiline
