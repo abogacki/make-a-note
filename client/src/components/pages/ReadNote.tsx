@@ -9,7 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import useFetchApi from "hooks/useFetchApi";
-import MainPaper from "components/molecules/MainPaper";
+import MainLayout from "components/layouts/MainLayout";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -44,36 +44,33 @@ const ReadNote: FunctionComponent<{}> = () => {
     : null;
 
   return (
-    <MainPaper>
-      <Box m={4}>
-        <Grid container>
-          <Grid item xs={12} className={classes.title}>
-            <Typography component="h1" variant="h4" align="center">
-              Read note
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Typography component="h2" variant="h6" align="left">
-              {data?.title}
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={4} md={3}>
-            <Typography component="div" variant="body1" align="left">
-              <div>Expiration date:</div>
-              <div>
-                {expirationDate &&
-                  format(expirationDate, "dd-MM-yyyy HH:MM:ss")}
-              </div>
-            </Typography>
-          </Grid>
-          <Grid item xs={12}>
-            <Box mt={5}>
-              <Typography>{data?.description}</Typography>
-            </Box>
-          </Grid>
+    <MainLayout title="Read note">
+      <Grid container>
+        <Grid item xs={12} className={classes.title}>
+          <Typography component="h1" variant="h4" align="center">
+            Read note
+          </Typography>
         </Grid>
-      </Box>
-    </MainPaper>
+        <Grid item xs={12}>
+          <Typography component="h2" variant="h6" align="left">
+            {data?.title}
+          </Typography>
+        </Grid>
+        <Grid item xs={12} sm={4} md={3}>
+          <Typography component="div" variant="body1" align="left">
+            <div>Expiration date:</div>
+            <div>
+              {expirationDate && format(expirationDate, "dd-MM-yyyy HH:MM:ss")}
+            </div>
+          </Typography>
+        </Grid>
+        <Grid item xs={12}>
+          <Box mt={5}>
+            <Typography>{data?.description}</Typography>
+          </Box>
+        </Grid>
+      </Grid>
+    </MainLayout>
   );
 };
 

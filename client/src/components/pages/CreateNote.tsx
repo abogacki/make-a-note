@@ -1,11 +1,9 @@
 import React from "react";
 import { useHistory } from "react-router";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
 
 import NoteForm from "components/organisms/NoteForm";
-import MainPaper from "components/molecules/MainPaper";
 import { fetchApi } from "api";
+import MainLayout from "components/layouts/MainLayout";
 
 const CreateNote = () => {
   const history = useHistory();
@@ -44,14 +42,9 @@ const CreateNote = () => {
   };
 
   return (
-    <MainPaper>
-      <Typography component="h1" variant="h4" align="center">
-        Create note
-      </Typography>
-      <Box m={4}>
-        <NoteForm initialValues={initialValues} onSubmit={onSubmit} />
-      </Box>
-    </MainPaper>
+    <MainLayout title="Make a note">
+      <NoteForm initialValues={initialValues} onSubmit={onSubmit} />
+    </MainLayout>
   );
 };
 
