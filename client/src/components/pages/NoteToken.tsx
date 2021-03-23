@@ -1,32 +1,17 @@
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { fetchApi } from "api";
-import PasswordInput from "components/PasswordInput";
+import PasswordInput from "components/molecules/PasswordInput";
 import useForm from "hooks/useForm";
 import React from "react";
 import { useHistory, useParams } from "react-router";
 import Cookies from "js-cookie";
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
-  },
-}));
+import MainPaper from "components/molecules/MainPaper";
 
 const NoteToken = () => {
   const history = useHistory();
-  const classes = useStyles();
   const { state, handleChange, handleSubmit } = useForm({
     password: "",
   });
@@ -43,7 +28,7 @@ const NoteToken = () => {
   };
 
   return (
-    <Paper className={classes.paper}>
+    <MainPaper>
       <Typography component="h1" variant="h5" align="center">
         Password required
       </Typography>
@@ -65,7 +50,7 @@ const NoteToken = () => {
           </Grid>
         </form>
       </Box>
-    </Paper>
+    </MainPaper>
   );
 };
 

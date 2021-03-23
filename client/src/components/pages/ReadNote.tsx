@@ -1,27 +1,17 @@
 import React, { FunctionComponent } from "react";
+import { useParams } from "react-router";
+import { format } from "date-fns";
+import Cookies from "js-cookie";
 import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import Grid from "@material-ui/core/Grid";
-import { useParams } from "react-router";
 import CircularProgress from "@material-ui/core/CircularProgress";
+
 import useFetchApi from "hooks/useFetchApi";
-import Cookies from "js-cookie";
-import { Description } from "@material-ui/icons";
-import { format } from "date-fns";
+import MainPaper from "components/molecules/MainPaper";
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
-  },
   title: {
     marginBottom: theme.spacing(3),
   },
@@ -52,8 +42,9 @@ const ReadNote: FunctionComponent<{}> = () => {
   const expirationDate = data?.expirationDate
     ? new Date(data?.expirationDate)
     : null;
+
   return (
-    <Paper className={classes.paper}>
+    <MainPaper>
       <Box m={4}>
         <Grid container>
           <Grid item xs={12} className={classes.title}>
@@ -82,7 +73,7 @@ const ReadNote: FunctionComponent<{}> = () => {
           </Grid>
         </Grid>
       </Box>
-    </Paper>
+    </MainPaper>
   );
 };
 

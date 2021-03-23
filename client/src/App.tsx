@@ -5,10 +5,11 @@ import { CssBaseline, makeStyles } from "@material-ui/core";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 
-import CreateNote from "pages/CreateNote";
-import ReadNote from "pages/ReadNote";
-import NoteToken from "pages/NoteToken";
-import AppHeader from "components/AppHeader";
+import CreateNote from "components/pages/CreateNote";
+import ReadNote from "components/pages/ReadNote";
+import NoteToken from "components/pages/NoteToken";
+import AppHeader from "components/organisms/AppHeader";
+import RecentNotes from "components/pages/RecentNotes";
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -33,7 +34,10 @@ const App = () => {
       <main className={classes.layout}>
         <Router>
           <Switch>
-            <Route exact path={["/", "/notes"]}>
+            <Route exact path={["/", "recent-notes"]}>
+              <RecentNotes />
+            </Route>
+            <Route exact path="/notes">
               <CreateNote />
             </Route>
             <Route exact path="/notes/:noteId">

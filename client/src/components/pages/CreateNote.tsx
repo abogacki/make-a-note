@@ -1,28 +1,14 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
+import { useHistory } from "react-router";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import { fetchApi } from "api";
-import NoteForm from "components/NoteForm";
-import { useHistory } from "react-router";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(3),
-    marginBottom: theme.spacing(3),
-    padding: theme.spacing(2),
-    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(6),
-      marginBottom: theme.spacing(6),
-      padding: theme.spacing(3),
-    },
-  },
-}));
+import NoteForm from "components/organisms/NoteForm";
+import MainPaper from "components/molecules/MainPaper";
+import { fetchApi } from "api";
 
 const CreateNote = () => {
   const history = useHistory();
-  const classes = useStyles();
 
   const initialValues = {
     title: "",
@@ -42,6 +28,15 @@ const CreateNote = () => {
         },
       });
 
+      const recentNotes = JSON.parse(
+        localStorage.getItem("recentNotes") || "[]"
+      );
+
+      localStorage.setItem(
+        "recentNotes",
+        JSON.stringify([...recentNotes, { title: note.title, _id: note._id }])
+      );
+
       history.push(`/notes/${note._id}`);
     } catch (error) {
       throw error;
@@ -49,14 +44,14 @@ const CreateNote = () => {
   };
 
   return (
-    <Paper className={classes.paper}>
+    <MainPaper>
       <Typography component="h1" variant="h4" align="center">
         Create note
       </Typography>
       <Box m={4}>
         <NoteForm initialValues={initialValues} onSubmit={onSubmit} />
       </Box>
-    </Paper>
+    </MainPaper>
   );
 };
 

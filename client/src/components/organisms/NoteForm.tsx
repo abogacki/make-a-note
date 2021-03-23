@@ -4,7 +4,7 @@ import TextField from "@material-ui/core/TextField";
 import { DateTimePicker } from "@material-ui/pickers";
 import useForm from "hooks/useForm";
 import React, { FunctionComponent } from "react";
-import PasswordInput from "./PasswordInput";
+import PasswordInput from "../molecules/PasswordInput";
 
 type TNoteForm = {
   title: string;
@@ -49,6 +49,7 @@ const NoteForm: FunctionComponent<TProps> = ({ onSubmit, initialValues }) => {
             value={noteState.expirationDate}
             onChange={(date) => setFieldValue("expirationDate", date)}
             inputVariant="outlined"
+            minDate={new Date()}
           />
         </Grid>
         <Grid item xs={12} sm={12}>

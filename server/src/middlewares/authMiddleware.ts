@@ -36,6 +36,7 @@ const authMiddleware = async (
       _id: (data as INoteDocument)._id,
       "tokens.token": token,
     });
+
     if (!note) {
       throw new HttpException({
         statusCode: 401,
