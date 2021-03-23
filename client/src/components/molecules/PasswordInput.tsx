@@ -13,6 +13,7 @@ type TProps = {
   name: string;
   label: string;
   value: string;
+  fullWidth?: boolean;
   onChange: ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
 };
 
@@ -22,6 +23,7 @@ const PasswordInput: FunctionComponent<TProps> = ({
   label,
   name,
   onChange,
+  fullWidth = false,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => setShowPassword((state) => !state);
@@ -45,6 +47,7 @@ const PasswordInput: FunctionComponent<TProps> = ({
           </InputAdornment>
         }
         labelWidth={label.length * 10}
+        fullWidth={fullWidth}
       />
     </FormControl>
   );

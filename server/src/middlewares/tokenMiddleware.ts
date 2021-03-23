@@ -4,18 +4,27 @@ import jwt from "jsonwebtoken";
 import HttpException from "src/exceptions/HttpException";
 import Note, { INoteDocument } from "src/models/Note";
 
-const authMiddleware = async (
+const tokenMiddleware = async (
   req: Request,
   _res: Response,
   next: NextFunction
 ) => {
   try {
     const token = req.header("Authorization")?.replace("Bearer ", "");
+    const { noteId } = req.params;
+
+    if (!noteId) {
+      throw new HttpException({
+        statusCode: 404,
+        status: "error",
+        message: "Resource not found",
+      });
+    }
     if (!token)
       throw new HttpException({
-        statusCode: 401,
+        statusCode: 403,
         status: "error",
-        message: "Not authorized to access this resource",
+        message: "Access denied",
       });
 
     let data;
@@ -26,22 +35,22 @@ const authMiddleware = async (
       }
     } catch (error) {
       throw new HttpException({
-        statusCode: 401,
+        statusCode: 403,
         status: "error",
-        message: "Invalid token",
+        message: "Access denied",
       });
     }
 
     const note = await Note.findOne({
       _id: (data as INoteDocument)._id,
-      "tokens.token": token,
+      tokens: token,
     });
 
     if (!note) {
       throw new HttpException({
-        statusCode: 401,
+        statusCode: 403,
         status: "error",
-        message: "Not authorized to access this resource",
+        message: "Access denied",
       });
     }
 
@@ -51,4 +60,4 @@ const authMiddleware = async (
   }
 };
 
-export default authMiddleware;
+export default tokenMiddleware;

@@ -5,10 +5,7 @@ import { Model, Schema, Document } from "mongoose";
 import db from "src/database/database";
 import HttpException from "src/exceptions/HttpException";
 
-type TJwtToken = {
-  _id: string;
-  token: string;
-};
+type TJwtToken = string;
 
 export interface INote {
   title: string;
@@ -46,14 +43,7 @@ const noteSchema = new Schema<INoteDocument>({
     required: true,
     minLength: 7,
   },
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  tokens: [String],
 });
 
 const SALT_WORK_FACTOR = 10;
@@ -62,7 +52,7 @@ noteSchema.methods.generateAuthToken = async function () {
   const note = this;
 
   const token = jwt.sign({ _id: note._id }, process.env.JWT_SECRET as string);
-  note.tokens.push({ token, _id: note.id });
+  note.tokens.push(token);
 
   await note.save();
   return token;
@@ -76,8 +66,8 @@ noteSchema.statics.findByCredentials = async (
   if (!note) {
     throw new HttpException({
       status: "error",
-      statusCode: 404,
-      message: "Note not found",
+      statusCode: 401,
+      message: "Invalid credentials",
     });
   }
 

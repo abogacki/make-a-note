@@ -12,7 +12,7 @@ const useFetchApi = <T>(path: string, init?: RequestInit) => {
   const handleError = useCallback(
     (error: any) => {
       switch (error.status) {
-        case 401:
+        case 403:
           history.push(`/notes/${noteId}/token`);
           break;
         default:

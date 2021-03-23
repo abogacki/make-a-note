@@ -10,6 +10,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import useFetchApi from "hooks/useFetchApi";
 import MainLayout from "components/layouts/MainLayout";
+import { TNote } from "types/notes";
 
 const useStyles = makeStyles((theme) => ({
   title: {
@@ -17,11 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type TNote = {
-  title: string;
-  description: string;
-  expirationDate: string;
-};
+type TNoteDetails = Pick<TNote, "title" | "description" | "expirationDate">;
 
 const ReadNote: FunctionComponent<{}> = () => {
   const classes = useStyles();
@@ -31,7 +28,7 @@ const ReadNote: FunctionComponent<{}> = () => {
   const headers = {
     Authorization: `Bearer ${token}`,
   };
-  const { data, isLoading } = useFetchApi<TNote>(`/notes/${noteId}`, {
+  const { data, isLoading } = useFetchApi<TNoteDetails>(`/notes/${noteId}`, {
     headers,
   });
 

@@ -64,7 +64,19 @@ export const noteUpdate = async (req: Request, res: Response) => {
 // read note by Id
 export const noteRead = async (req: Request, res: Response) => {
   try {
+    console.log("READ");
+    console.log("READ");
+    console.log("READ");
+    console.log("READ");
+
     const { noteId } = req.params;
+    const token = req.header("Authorization")?.replace("Bearer ", "");
+    if (!token)
+      throw new HttpException({
+        statusCode: 401,
+        status: "error",
+        message: "Not authorized to access this resource",
+      });
     const newNote = await Note.findById(noteId);
 
     res.send(newNote);

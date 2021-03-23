@@ -1,12 +1,14 @@
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import { fetchApi } from "api";
-import PasswordInput from "components/molecules/PasswordInput";
-import useForm from "hooks/useForm";
-import React from "react";
 import { useHistory, useParams } from "react-router";
 import Cookies from "js-cookie";
+import Button from "@material-ui/core/Button";
+import Grid from "@material-ui/core/Grid";
+import React from "react";
+import TextField from "@material-ui/core/TextField";
+
 import MainLayout from "components/layouts/MainLayout";
+import PasswordInput from "components/molecules/PasswordInput";
+import useForm from "hooks/useForm";
+import { fetchApi } from "api";
 
 const NoteToken = () => {
   const history = useHistory();
@@ -15,10 +17,11 @@ const NoteToken = () => {
   });
   const { noteId } = useParams<{ noteId: string }>();
 
-  const onSubmit = async (values: { password: string }) => {
+  const onSubmit = async ({ password }: { password: string }) => {
+    const body = JSON.stringify({ password, id: noteId });
     const data = await fetchApi(`/notes/${noteId}/token`, {
       method: "POST",
-      body: JSON.stringify(values),
+      body,
     });
 
     Cookies.set("Authorization", data.token);
@@ -29,13 +32,27 @@ const NoteToken = () => {
     <MainLayout title="Password required">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container>
-          <Grid item xs={12} sm={12}>
+          <Grid item xs={12} sm={6}>
+            <TextField
+              id="noteId"
+              name="noteId"
+              label="Note Id"
+              value={noteId}
+              InputProps={{
+                readOnly: true,
+              }}
+              fullWidth
+              variant="outlined"
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
             <PasswordInput
               id="password"
               name="password"
               label="Passowrd"
               value={state.password}
               onChange={handleChange}
+              fullWidth
             />
           </Grid>
           <Grid item xs={12}>

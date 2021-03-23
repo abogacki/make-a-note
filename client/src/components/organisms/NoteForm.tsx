@@ -4,18 +4,19 @@ import TextField from "@material-ui/core/TextField";
 import { DateTimePicker } from "@material-ui/pickers";
 import useForm from "hooks/useForm";
 import React, { FunctionComponent } from "react";
+import { TNote } from "types/notes";
 import PasswordInput from "../molecules/PasswordInput";
 
-type TNoteForm = {
-  title: string;
-  description: string;
+type TCreateNoteData = Pick<
+  TNote,
+  "title" | "description" | "expirationDate"
+> & {
   password: string;
-  expirationDate: Date;
 };
 
 type TProps = {
-  onSubmit: (values: TNoteForm) => void;
-  initialValues: TNoteForm;
+  onSubmit: (values: TCreateNoteData) => void;
+  initialValues: TCreateNoteData;
 };
 
 const NoteForm: FunctionComponent<TProps> = ({ onSubmit, initialValues }) => {
