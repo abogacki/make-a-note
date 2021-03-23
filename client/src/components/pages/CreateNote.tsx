@@ -4,7 +4,7 @@ import { useHistory } from "react-router";
 import NoteForm from "components/organisms/NoteForm";
 import { fetchApi } from "api";
 import MainLayout from "components/layouts/MainLayout";
-import { getRecentNotes, setRecentNotes } from "modules/localStorage";
+import { updateRecentNotes } from "modules/localStorage";
 
 const CreateNote = () => {
   const history = useHistory();
@@ -27,9 +27,7 @@ const CreateNote = () => {
         },
       });
 
-      const recentNotes = getRecentNotes();
-
-      setRecentNotes([...recentNotes, { title: note.title, _id: note._id }]);
+      updateRecentNotes({ title: note.title, _id: note._id });
 
       history.push(`/notes/${note._id}`);
     } catch (error) {
