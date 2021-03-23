@@ -1,7 +1,7 @@
 import Box from "@material-ui/core/Box";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
-import MainPaper from "components/molecules/MainPaper";
+import CenteredPaper from "components/molecules/CenteredPaper";
 import AppHeader from "components/organisms/AppHeader";
 import React, { FunctionComponent } from "react";
 
@@ -28,12 +28,12 @@ const MainLayout: FunctionComponent<TProps> = ({ title, children }) => {
     <>
       <AppHeader />
       <main className={classes.layout}>
-        <MainPaper>
+        <CenteredPaper>
           <Typography component="h1" variant="h4" align="center">
             {title}
           </Typography>
           <Box m={4}>{children}</Box>
-        </MainPaper>
+        </CenteredPaper>
       </main>
     </>
   );

@@ -15,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainPaper: FunctionComponent<{}> = ({ children }) => {
+const CenteredPaper: FunctionComponent<{}> = ({ children }) => {
   const classes = useStyles();
   return <Paper className={classes.paper}>{children}</Paper>;
 };
 
-export default MainPaper;
+export default CenteredPaper;
