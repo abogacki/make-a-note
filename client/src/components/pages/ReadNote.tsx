@@ -1,4 +1,4 @@
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import { useParams } from "react-router";
 import Cookies from "js-cookie";
 import CircularProgress from "@material-ui/core/CircularProgress";

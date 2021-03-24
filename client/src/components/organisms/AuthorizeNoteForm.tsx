@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import useForm from "hooks/useForm";
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import PasswordInput from "../molecules/PasswordInput";
 
 type TProps = {

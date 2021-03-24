@@ -1,6 +1,6 @@
 import Paper from "@material-ui/core/Paper";
 import { makeStyles } from "@material-ui/core/styles";
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 
 const useStyles = makeStyles((theme) => ({
   paper: {

@@ -8,7 +8,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import { format, isBefore } from "date-fns";
 import { getRecentNotes } from "modules/localStorage";
-import React, { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
