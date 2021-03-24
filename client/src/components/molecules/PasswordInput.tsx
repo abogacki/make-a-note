@@ -28,7 +28,7 @@ const PasswordInput: FunctionComponent<TProps> = ({
   const [showPassword, setShowPassword] = useState(false);
   const toggleShowPassword = () => setShowPassword((state) => !state);
   return (
-    <FormControl variant="outlined">
+    <FormControl fullWidth={fullWidth} variant="outlined">
       <InputLabel htmlFor={id}>{label}</InputLabel>
       <OutlinedInput
         id={id}

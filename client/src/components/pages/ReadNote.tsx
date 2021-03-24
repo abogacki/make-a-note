@@ -6,7 +6,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import useFetchApi from "hooks/useFetchApi";
 import MainLayout from "components/layouts/MainLayout";
 import { TNote } from "types/notes";
-import NoteDocument from "components/molecules/NoteDocument";
+import NoteDocument from "components/organisms/NoteDocument";
 
 type TNoteDetails = Pick<TNote, "title" | "description" | "expirationDate">;
 

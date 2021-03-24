@@ -1,6 +1,6 @@
 import { TNote } from "types/notes";
 
-type TNoteLabel = Pick<TNote, "_id" | "title">;
+type TNoteLabel = Pick<TNote, "_id" | "title" | "expirationDate">;
 
 const RECENT_NOTES_LOCAL_STORAGE_KEY = "RecentNotes";
 

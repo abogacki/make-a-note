@@ -6,6 +6,7 @@ import Menu from "@material-ui/core/Menu";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
+import { isAfter } from "date-fns";
 import { getRecentNotes } from "modules/localStorage";
 import React, { SyntheticEvent, useState } from "react";
 
@@ -33,6 +34,24 @@ const AppHeader = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const now = new Date();
+
+  console.log(recentNotes);
+
+  const visibleNotes = recentNotes
+    .filter(({ expirationDate }) => isAfter(now, new Date(expirationDate)))
+    .map(({ title, _id }) => (
+      <MenuItem
+        component="a"
+        onClick={handleClose}
+        href={`/notes/${_id}`}
+        key={_id}
+      >
+        {title}
+      </MenuItem>
+    ));
+
   return (
     <AppBar position="absolute" color="default" className={classes.appBar}>
       <Toolbar>
@@ -52,16 +71,14 @@ const AppHeader = () => {
             <ListItem button title="Recent notes" onClick={handleClick}>
               Recent notes
             </ListItem>
-            <Menu id="main-nav" keepMounted open={open} onClose={handleClose}>
-              {recentNotes.map(({ title, _id }) => (
-                <MenuItem
-                  onClick={handleClose}
-                  href={`/notes/${_id}`}
-                  key={_id}
-                >
-                  {title}
-                </MenuItem>
-              ))}
+            <Menu
+              anchorEl={anchorEl}
+              id="main-nav"
+              keepMounted
+              open={open}
+              onClose={handleClose}
+            >
+              {visibleNotes}
             </Menu>
           </List>
         </Toolbar>

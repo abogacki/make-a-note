@@ -30,7 +30,11 @@ const CreateNote = () => {
         },
       });
 
-      updateRecentNotes({ title: note.title, _id: note._id });
+      updateRecentNotes({
+        expirationDate: note.expirationDate,
+        title: note.title,
+        _id: note._id,
+      });
 
       history.push(`/notes/${note._id}`);
     } catch (error) {
