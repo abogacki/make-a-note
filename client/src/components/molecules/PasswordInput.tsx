@@ -6,7 +6,7 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/Visibility";
 
-import React, { ChangeEventHandler, FunctionComponent, useState } from "react";
+import { ChangeEventHandler, FunctionComponent, useState } from "react";
 
 type TProps = {
   id: string;

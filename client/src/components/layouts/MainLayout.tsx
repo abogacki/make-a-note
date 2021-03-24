@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import CenteredPaper from "components/molecules/CenteredPaper";
 import AppHeader from "components/organisms/AppHeader";
-import React, { FunctionComponent } from "react";
+import { FunctionComponent } from "react";
 import Alert from "@material-ui/lab/Alert";
 
 type TProps = {

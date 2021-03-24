@@ -1,12 +1,12 @@
 import { useHistory, useParams } from "react-router";
 import Cookies from "js-cookie";
-import React, { useState } from "react";
+import { useState } from "react";
 
 import MainLayout from "components/layouts/MainLayout";
 import { fetchApi } from "api";
 import AuthorizeNoteForm from "components/organisms/AuthorizeNoteForm";
 
-const NoteToken = () => {
+const NoteAuthorize = () => {
   const history = useHistory();
   const [error, setError] = useState<null | string>();
   const { noteId } = useParams<{ noteId: string }>();
@@ -37,4 +37,4 @@ const NoteToken = () => {
   );
 };
 
-export default NoteToken;
+export default NoteAuthorize;
