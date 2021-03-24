@@ -1,14 +1,11 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Model, Schema, Document } from "mongoose";
+import { Model, Schema, Document, LeanDocument } from "mongoose";
 
 import db from "src/database/database";
 import HttpException from "src/exceptions/HttpException";
 
-type JWTToken = {
-  _id: string;
-  token: string;
-};
+type TJwtToken = string;
 
 export interface INote {
   title: string;
@@ -16,13 +13,14 @@ export interface INote {
   password: string;
   createdAt: Date;
   expirationDate?: Date;
-  tokens: Array<JWTToken>;
+  tokens: Array<TJwtToken>;
 }
 
 export interface INoteDocument extends INote, Document {
   generateHash(password: string): Promise<string>;
   validatePassword(pasword: string): Promise<boolean>;
   generateAuthToken(): Promise<string>;
+  toJSON(): LeanDocument<this>;
 }
 
 export interface INoteModel extends Model<INoteDocument> {
@@ -30,30 +28,29 @@ export interface INoteModel extends Model<INoteDocument> {
 }
 
 const noteSchema = new Schema<INoteDocument>({
-  title: String,
-  description: String,
+  title: {
+    type: String,
+    required: [true, "Title is required"],
+  },
+  description: {
+    type: String,
+    required: [true, "Description is required"],
+  },
   createdAt: {
     type: Date,
     default: Date.now,
+    required: [true, "Creation date is required is required"],
   },
   expirationDate: {
     type: Date,
-    expires: 0,
-    default: null,
+    expires: 1,
   },
   password: {
     type: String,
-    required: true,
     minLength: 7,
+    required: [true, "Password is required"],
   },
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  tokens: [String],
 });
 
 const SALT_WORK_FACTOR = 10;
@@ -62,10 +59,15 @@ noteSchema.methods.generateAuthToken = async function () {
   const note = this;
 
   const token = jwt.sign({ _id: note._id }, process.env.JWT_SECRET as string);
-  note.tokens.push({ token, _id: note.id });
+  note.tokens.push(token);
 
   await note.save();
   return token;
+};
+
+noteSchema.methods.toJSON = function () {
+  const { tokens, password, ...object } = this.toObject();
+  return object;
 };
 
 noteSchema.statics.findByCredentials = async (
@@ -76,8 +78,8 @@ noteSchema.statics.findByCredentials = async (
   if (!note) {
     throw new HttpException({
       status: "error",
-      statusCode: 404,
-      message: "Note not found",
+      statusCode: 401,
+      message: "Invalid credentials",
     });
   }
 
