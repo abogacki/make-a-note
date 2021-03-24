@@ -27,7 +27,6 @@ const tokenMiddleware = async (
         message: "Access denied",
       });
 
-    // gracefully handle jwt.verify error
     let data;
     try {
       data = jwt.verify(token, process.env.JWT_SECRET as string);
