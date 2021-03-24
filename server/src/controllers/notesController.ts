@@ -19,7 +19,7 @@ export const noteGenerateToken = async (req: Request, res: Response) => {
     }
 
     const token = await note.generateAuthToken();
-    res.send({ note, token });
+    res.send({ token });
   } catch (error) {
     throw error;
   }
@@ -38,7 +38,9 @@ export const noteCreate = async (req: Request, res: Response) => {
     });
 
     await newNote.save();
-    res.send(newNote);
+    const noteLeanDocument = newNote.toJSON();
+
+    res.send(noteLeanDocument);
   } catch (error) {
     throw error;
   }
@@ -64,12 +66,8 @@ export const noteUpdate = async (req: Request, res: Response) => {
 // read note by Id
 export const noteRead = async (req: Request, res: Response) => {
   try {
-    console.log("READ");
-    console.log("READ");
-    console.log("READ");
-    console.log("READ");
-
     const { noteId } = req.params;
+
     const token = req.header("Authorization")?.replace("Bearer ", "");
     if (!token)
       throw new HttpException({
@@ -77,9 +75,21 @@ export const noteRead = async (req: Request, res: Response) => {
         status: "error",
         message: "Not authorized to access this resource",
       });
-    const newNote = await Note.findById(noteId);
 
-    res.send(newNote);
+    const note = await Note.findOne({
+      _id: noteId,
+      tokens: token,
+    });
+    if (!note)
+      throw new HttpException({
+        statusCode: 403,
+        status: "error",
+        message: "Not authorized to access this resource",
+      });
+
+    const noteLeanDocument = note.toJSON();
+
+    res.send(noteLeanDocument);
   } catch (error) {
     throw error;
   }

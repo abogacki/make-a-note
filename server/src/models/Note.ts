@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { Model, Schema, Document } from "mongoose";
+import { Model, Schema, Document, LeanDocument } from "mongoose";
 
 import db from "src/database/database";
 import HttpException from "src/exceptions/HttpException";
@@ -20,6 +20,7 @@ export interface INoteDocument extends INote, Document {
   generateHash(password: string): Promise<string>;
   validatePassword(pasword: string): Promise<boolean>;
   generateAuthToken(): Promise<string>;
+  toJSON(): LeanDocument<this>;
 }
 
 export interface INoteModel extends Model<INoteDocument> {
@@ -27,21 +28,27 @@ export interface INoteModel extends Model<INoteDocument> {
 }
 
 const noteSchema = new Schema<INoteDocument>({
-  title: String,
-  description: String,
+  title: {
+    type: String,
+    required: [true, "Title is required"],
+  },
+  description: {
+    type: String,
+    required: [true, "Description is required"],
+  },
   createdAt: {
     type: Date,
     default: Date.now,
+    required: [true, "Creation date is required is required"],
   },
   expirationDate: {
     type: Date,
     expires: 1,
-    default: null,
   },
   password: {
     type: String,
-    required: true,
     minLength: 7,
+    required: [true, "Password is required"],
   },
   tokens: [String],
 });
@@ -56,6 +63,11 @@ noteSchema.methods.generateAuthToken = async function () {
 
   await note.save();
   return token;
+};
+
+noteSchema.methods.toJSON = function () {
+  const { tokens, password, ...object } = this.toObject();
+  return object;
 };
 
 noteSchema.statics.findByCredentials = async (
