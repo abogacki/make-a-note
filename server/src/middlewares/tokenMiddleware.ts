@@ -27,6 +27,7 @@ const tokenMiddleware = async (
         message: "Access denied",
       });
 
+    // gracefully handle jwt.verify error
     let data;
     try {
       data = jwt.verify(token, process.env.JWT_SECRET as string);
@@ -41,18 +42,7 @@ const tokenMiddleware = async (
       });
     }
 
-    const note = await Note.findOne({
-      _id: (data as INoteDocument)._id,
-      tokens: token,
-    });
-
-    if (!note) {
-      throw new HttpException({
-        statusCode: 403,
-        status: "error",
-        message: "Access denied",
-      });
-    }
+    req.token = token;
 
     next();
   } catch (error) {
