@@ -6,7 +6,7 @@ import DateFnsUtils from "@date-io/date-fns";
 
 import CreateNote from "components/pages/CreateNote";
 import ReadNote from "components/pages/ReadNote";
-import NoteToken from "components/pages/NoteAuthorize";
+import NoteAuthorize from "components/pages/NoteAuthorize";
 import RecentNotes from "components/pages/RecentNotes";
 
 const App = () => {
@@ -25,7 +25,7 @@ const App = () => {
             <ReadNote />
           </Route>
           <Route exact path="/notes/:noteId/token">
-            <NoteToken />
+            <NoteAuthorize />
           </Route>
           <Route>
             <div>Not found</div>
