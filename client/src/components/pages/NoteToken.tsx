@@ -2,7 +2,7 @@ import { useHistory, useParams } from "react-router";
 import Cookies from "js-cookie";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import React from "react";
+import React, { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 
 import MainLayout from "components/layouts/MainLayout";
@@ -15,21 +15,26 @@ const NoteToken = () => {
   const { state, handleChange, handleSubmit } = useForm({
     password: "",
   });
+  const [error, setError] = useState<null | string>();
   const { noteId } = useParams<{ noteId: string }>();
 
   const onSubmit = async ({ password }: { password: string }) => {
-    const body = JSON.stringify({ password, id: noteId });
-    const data = await fetchApi(`/notes/${noteId}/token`, {
-      method: "POST",
-      body,
-    });
+    try {
+      const body = JSON.stringify({ password, id: noteId });
+      const data = await fetchApi(`/notes/${noteId}/token`, {
+        method: "POST",
+        body,
+      });
 
-    Cookies.set("Authorization", data.token);
-    history.push(`/notes/${noteId}`);
+      Cookies.set("Authorization", data.token);
+      history.push(`/notes/${noteId}`);
+    } catch (error) {
+      setError("Could not authenticate. Try again.");
+    }
   };
 
   return (
-    <MainLayout title="Password required">
+    <MainLayout error={error} title="Password required">
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container>
           <Grid item xs={12} sm={6}>

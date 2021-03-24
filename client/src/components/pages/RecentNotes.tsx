@@ -1,9 +1,10 @@
 import { Link } from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import MainLayout from "components/layouts/MainLayout";
+import { getRecentNotes } from "modules/localStorage";
 
 const RecentNotes = () => {
-  const recentNotes = JSON.parse(localStorage.getItem("recentNotes") || "[]");
+  const recentNotes = getRecentNotes();
   return (
     <MainLayout title="Recent notes">
       <Box m={4}>

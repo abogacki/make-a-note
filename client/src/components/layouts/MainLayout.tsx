@@ -4,9 +4,11 @@ import Typography from "@material-ui/core/Typography";
 import CenteredPaper from "components/molecules/CenteredPaper";
 import AppHeader from "components/organisms/AppHeader";
 import React, { FunctionComponent } from "react";
+import Alert from "@material-ui/lab/Alert";
 
 type TProps = {
   title?: string;
+  error?: string | null;
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MainLayout: FunctionComponent<TProps> = ({ title, children }) => {
+const MainLayout: FunctionComponent<TProps> = ({ title, children, error }) => {
   const classes = useStyles();
   return (
     <>
@@ -30,8 +32,10 @@ const MainLayout: FunctionComponent<TProps> = ({ title, children }) => {
       <main className={classes.layout}>
         <CenteredPaper>
           <Typography component="h1" variant="h4" align="center">
+            <Box></Box>
             {title}
           </Typography>
+          <Box m={4}>{error && <Alert severity="error">{error}</Alert>}</Box>
           <Box m={4}>{children}</Box>
         </CenteredPaper>
       </main>

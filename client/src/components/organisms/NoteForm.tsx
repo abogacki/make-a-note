@@ -7,11 +7,9 @@ import React, { FunctionComponent } from "react";
 import { TNote } from "types/notes";
 import PasswordInput from "../molecules/PasswordInput";
 
-type TCreateNoteData = Pick<
-  TNote,
-  "title" | "description" | "expirationDate"
-> & {
+type TCreateNoteData = Pick<TNote, "title" | "description"> & {
   password: string;
+  expirationDate: Date;
 };
 
 type TProps = {
@@ -30,7 +28,7 @@ const NoteForm: FunctionComponent<TProps> = ({ onSubmit, initialValues }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
+        <Grid item xs={12}>
           <TextField
             id="title"
             name="title"
@@ -53,7 +51,7 @@ const NoteForm: FunctionComponent<TProps> = ({ onSubmit, initialValues }) => {
             minDate={new Date()}
           />
         </Grid>
-        <Grid item xs={12} sm={12}>
+        <Grid item xs={12} sm={6}>
           <PasswordInput
             name="password"
             id="password"
@@ -73,7 +71,7 @@ const NoteForm: FunctionComponent<TProps> = ({ onSubmit, initialValues }) => {
             onChange={handleChange}
           />
         </Grid>
-        <Grid item alignContent="flex-end">
+        <Grid item>
           <Button disableElevation color="primary" type="submit">
             Submit
           </Button>

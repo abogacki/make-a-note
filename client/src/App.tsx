@@ -16,10 +16,10 @@ const App = () => {
       <CssBaseline />
       <Router>
         <Switch>
-          <Route exact path={["/", "recent-notes"]}>
+          <Route exact path={["/", "/notes"]}>
             <RecentNotes />
           </Route>
-          <Route exact path="/notes">
+          <Route exact path="/notes/create">
             <CreateNote />
           </Route>
           <Route exact path="/notes/:noteId">

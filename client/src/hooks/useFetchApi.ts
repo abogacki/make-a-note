@@ -36,6 +36,7 @@ const useFetchApi = <T>(path: string, init?: RequestInit) => {
     };
 
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return {
