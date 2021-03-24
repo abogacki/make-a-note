@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 
 import HttpException from "src/exceptions/HttpException";
+import getTokenFromAuthorizationHeader from "src/helpers/getTokenFromAuthorizationHeader";
 import Note from "src/models/Note";
 
 // generate token for note
@@ -49,15 +50,7 @@ export const noteCreate = async (req: Request, res: Response) => {
 // update note
 export const noteUpdate = async (req: Request, res: Response) => {
   try {
-    const { noteId } = req.params;
-    const { title, description } = req.body;
-
-    const newNote = await Note.findByIdAndUpdate(noteId, {
-      title,
-      description,
-    });
-
-    res.send(newNote);
+    res.send("Not implemented");
   } catch (error) {
     throw error;
   }
@@ -68,24 +61,18 @@ export const noteRead = async (req: Request, res: Response) => {
   try {
     const { noteId } = req.params;
 
-    const token = req.header("Authorization")?.replace("Bearer ", "");
-    if (!token)
-      throw new HttpException({
-        statusCode: 401,
-        status: "error",
-        message: "Not authorized to access this resource",
-      });
-
     const note = await Note.findOne({
       _id: noteId,
-      tokens: token,
+      tokens: req.token,
     });
-    if (!note)
+
+    if (!note) {
       throw new HttpException({
-        statusCode: 403,
+        statusCode: 404,
         status: "error",
-        message: "Not authorized to access this resource",
+        message: "Not found",
       });
+    }
 
     const noteLeanDocument = note.toJSON();
 
