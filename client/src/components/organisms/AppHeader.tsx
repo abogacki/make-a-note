@@ -6,17 +6,18 @@ import Menu from "@material-ui/core/Menu";
 import { makeStyles } from "@material-ui/core/styles";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
-import { isAfter } from "date-fns";
+import { format, isBefore } from "date-fns";
 import { getRecentNotes } from "modules/localStorage";
 import React, { SyntheticEvent, useState } from "react";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles(() => ({
   appBar: {
     position: "relative",
   },
   navDisplayFlex: {
-    display: `flex`,
-    justifyContent: `space-between`,
+    display: "flex",
+    justifyContent: "space-between",
   },
 }));
 
@@ -37,10 +38,17 @@ const AppHeader = () => {
 
   const now = new Date();
 
-  console.log(recentNotes);
-
   const visibleNotes = recentNotes
-    .filter(({ expirationDate }) => isAfter(now, new Date(expirationDate)))
+    .filter(({ expirationDate }) => {
+      const d = new Date(expirationDate);
+      console.log({ d });
+
+      const isExpired = isBefore(now, d);
+      const n = format(now, "dd-MM-yyyy HH:mm");
+      const e = format(d, "dd-MM-yyyy HH:mm");
+      console.log({ isExpired, n, e });
+      return isExpired;
+    })
     .map(({ title, _id }) => (
       <MenuItem
         component="a"
@@ -65,7 +73,7 @@ const AppHeader = () => {
             component="nav"
             className={classes.navDisplayFlex}
           >
-            <ListItem button component="a" href="/notes/create">
+            <ListItem button component={Link} to="/notes/create">
               Create note
             </ListItem>
             <ListItem button title="Recent notes" onClick={handleClick}>
