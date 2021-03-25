@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 
 import HttpException from "src/exceptions/HttpException";
-import getTokenFromAuthorizationHeader from "src/helpers/getTokenFromAuthorizationHeader";
 import Note from "src/models/Note";
 
 // generate token for note
