@@ -10,9 +10,7 @@ const tokenMiddleware = async (
   next: NextFunction
 ) => {
   try {
-    const token = req.header("Authorization")?.replace("Bearer ", "");
     const { noteId } = req.params;
-
     if (!noteId) {
       throw new HttpException({
         statusCode: 404,
@@ -20,6 +18,8 @@ const tokenMiddleware = async (
         message: "Resource not found",
       });
     }
+
+    const token = req.header("Authorization")?.replace("Bearer ", "");
     if (!token)
       throw new HttpException({
         statusCode: 403,
