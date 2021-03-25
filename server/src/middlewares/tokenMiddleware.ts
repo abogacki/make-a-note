@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 import HttpException from "src/exceptions/HttpException";
-import Note, { INoteDocument } from "src/models/Note";
 
 const tokenMiddleware = async (
   req: Request,

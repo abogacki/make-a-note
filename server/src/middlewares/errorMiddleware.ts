@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 
 import HttpException from "src/exceptions/HttpException";
 
-async function errorMiddleware(
+function errorMiddleware(
   error: HttpException,
   _req: Request,
   res: Response,
