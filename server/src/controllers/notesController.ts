@@ -47,7 +47,7 @@ export const noteCreate = async (req: Request, res: Response) => {
 };
 
 // update note
-export const noteUpdate = async (req: Request, res: Response) => {
+export const noteUpdate = async (_req: Request, res: Response) => {
   try {
     res.send("Not implemented");
   } catch (error) {
